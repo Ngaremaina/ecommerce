@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import CardList from './components/CardList';
+import { useEffect, useState } from "react"
 
 function App() {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const fetching = async () => {
+
+      const response = await fetch("https://shoes-data.onrender.com/sneakers")
+      const data = await response.json()
+      console.log(data)
+      return setProducts(data)
+    }
+
+    fetching()
+
+  })
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className = "flex flex-col h-screen max-h-screen">
+      <CardList products = {products}/>
     </div>
   );
 }
